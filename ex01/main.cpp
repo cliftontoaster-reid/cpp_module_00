@@ -6,7 +6,7 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:16:06 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/08/06 15:06:34 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/01 15:49:37 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,20 @@ void commandAdd(PhoneBook &phonebook)
   std::cout << BOLD << "Enter nickname: " << RESET;
   std::getline(std::cin, nickname);
   contact.setNickname(nickname);
-
-  std::cout << BOLD << "Enter phone number: " << RESET;
-  std::getline(std::cin, phoneNumber);
-  try
+  while (true)
   {
-    contact.setPhoneNumber(phoneNumber);
+    std::cout << BOLD << "Enter phone number: " << RESET;
+    std::getline(std::cin, phoneNumber);
+    try
+    {
+      contact.setPhoneNumber(phoneNumber);
+      break;
+    }
+    catch (const std::invalid_argument &e)
+    {
+      std::cerr << RED << e.what() << RESET << std::endl;
+    }
   }
-  catch (const std::invalid_argument &e)
-  {
-    std::cerr << RED << e.what() << RESET << std::endl;
-    return;
-  }
-
   std::cout << BOLD << "Enter darkest secret: " << RESET;
   std::getline(std::cin, darkestSecret);
   contact.setDarkestSecret(darkestSecret);
@@ -88,7 +89,7 @@ void commandSearch(const PhoneBook &phonebook)
   const Contact *contacts = phonebook.getContacts();
 
   int count = 0;
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < PhoneBook::MAX_CONTACTS; i++)
   {
     const Contact &contact = contacts[i];
     if (!contact.isEmpty())
@@ -110,7 +111,7 @@ void commandSearch(const PhoneBook &phonebook)
   }
 
   int id = strToInt(input) - 1; // Convert to zero-based index
-  if (id < 0 || id >= 8 || contacts[id].isEmpty())
+  if (id < 0 || id >= PhoneBook::MAX_CONTACTS || contacts[id].isEmpty())
   {
     std::cerr << RED << "Contact not found." << RESET << std::endl;
     return;

@@ -6,26 +6,24 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:42:54 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/08/06 14:47:06 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/01 15:49:34 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
+PhoneBook::PhoneBook() : contactCount(0) {}
+
 void PhoneBook::addContact(const Contact &contact)
 {
   int i = 0;
   // start at index and loop until we find an empty slot
-  while (i < 8 && !contacts[i].isEmpty())
+  while (i < MAX_CONTACTS && !contacts[i].isEmpty())
     i++;
   // if we found an empty slot, add the contact
-  if (i < 8)
-  {
-    contacts[i] = contact;
+  if (contactCount < MAX_CONTACTS)
     contactCount++;
-    return;
-  }
-  std::__throw_runtime_error("PhoneBook is full");
+  contacts[i % MAX_CONTACTS] = contact;
 }
 
 const Contact *PhoneBook::getContacts() const
@@ -35,7 +33,7 @@ const Contact *PhoneBook::getContacts() const
 
 void PhoneBook::removeContact(const std::string &name)
 {
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < MAX_CONTACTS; i++)
   {
     if (!contacts[i].isEmpty() && contacts[i].getName() == name)
     {
@@ -134,7 +132,7 @@ bool isMatching(const Contact &contact, const std::string &search)
 int PhoneBook::searchContact(const std::string &name, Contact results[], int maxResults) const
 {
   int count = 0;
-  for (int i = 0; i < 8 && count < maxResults; i++)
+  for (int i = 0; i < MAX_CONTACTS && count < maxResults; i++)
   {
     if (!contacts[i].isEmpty() && isMatching(contacts[i], name))
     {
