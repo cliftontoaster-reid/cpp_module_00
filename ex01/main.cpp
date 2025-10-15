@@ -6,7 +6,7 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:16:06 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/10/01 15:49:37 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/15 12:22:13 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,51 @@ void commandAdd(PhoneBook &phonebook)
 {
   Contact contact;
   std::string name, firstName, nickname, phoneNumber, darkestSecret;
-  std::cout << BOLD << "Enter name: " << RESET;
-  std::getline(std::cin, name);
-  contact.setName(name);
+  while (true)
+  {
+    std::cout << BOLD << "Enter name: " << RESET;
+    std::getline(std::cin, name);
+    if (!name.empty())
+    {
+      contact.setName(name);
+      break;
+    }
+    else
+    {
+      std::cerr << RED << "Name cannot be empty." << RESET << std::endl;
+    }
+  }
 
-  std::cout << BOLD << "Enter first name: " << RESET;
-  std::getline(std::cin, firstName);
-  contact.setFirstName(firstName);
-  std::cout << BOLD << "Enter nickname: " << RESET;
-  std::getline(std::cin, nickname);
-  contact.setNickname(nickname);
+  while (true)
+  {
+    std::cout << BOLD << "Enter first name: " << RESET;
+    std::getline(std::cin, firstName);
+    if (!firstName.empty())
+    {
+      contact.setFirstName(firstName);
+      break;
+    }
+    else
+    {
+      std::cerr << RED << "First name cannot be empty." << RESET << std::endl;
+    }
+  }
+
+  while (true)
+  {
+    std::cout << BOLD << "Enter nickname: " << RESET;
+    std::getline(std::cin, nickname);
+    if (!nickname.empty())
+    {
+      contact.setNickname(nickname);
+      break;
+    }
+    else
+    {
+      std::cerr << RED << "Nickname cannot be empty." << RESET << std::endl;
+    }
+  }
+
   while (true)
   {
     std::cout << BOLD << "Enter phone number: " << RESET;
@@ -56,9 +91,21 @@ void commandAdd(PhoneBook &phonebook)
       std::cerr << RED << e.what() << RESET << std::endl;
     }
   }
-  std::cout << BOLD << "Enter darkest secret: " << RESET;
-  std::getline(std::cin, darkestSecret);
-  contact.setDarkestSecret(darkestSecret);
+
+  while (true)
+  {
+    std::cout << BOLD << "Enter darkest secret: " << RESET;
+    std::getline(std::cin, darkestSecret);
+    if (!darkestSecret.empty())
+    {
+      contact.setDarkestSecret(darkestSecret);
+      break;
+    }
+    else
+    {
+      std::cerr << RED << "Darkest secret cannot be empty." << RESET << std::endl;
+    }
+  }
 
   try
   {
@@ -97,6 +144,12 @@ void commandSearch(const PhoneBook &phonebook)
       std::cout << "  " << UNDERLINE << ++count << RESET;
       contact.displayContact();
     }
+  }
+
+  if (count == 0)
+  {
+    std::cout << YELLOW << "No contacts available." << RESET << std::endl;
+    return;
   }
 
   // We then ask for which ID the user wants to see the details of the contact, if out of range we print an error message
