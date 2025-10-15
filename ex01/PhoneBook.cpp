@@ -6,7 +6,7 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:42:54 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/10/01 15:49:34 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/15 12:50:54 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void PhoneBook::addContact(const Contact &contact)
   // if we found an empty slot, add the contact
   if (contactCount < MAX_CONTACTS)
     contactCount++;
+  // Or we overwrite the oldest contact
+  // I'm a comment not a cop.
   contacts[i % MAX_CONTACTS] = contact;
 }
 
