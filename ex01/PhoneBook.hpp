@@ -6,7 +6,7 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:40:08 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/10/01 15:51:00 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/16 15:45:36 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ public:
 private:
   Contact contacts[MAX_CONTACTS];
   int contactCount;
+  int i;
 };

@@ -6,20 +6,17 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 13:42:54 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/10/15 12:50:54 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/16 15:45:49 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook() : contactCount(0) {}
+PhoneBook::PhoneBook() : contactCount(0), i(0) {}
 
 void PhoneBook::addContact(const Contact &contact)
 {
-  int i = 0;
-  // start at index and loop until we find an empty slot
-  while (i < MAX_CONTACTS && !contacts[i].isEmpty())
-    i++;
+  i++;
   // if we found an empty slot, add the contact
   if (contactCount < MAX_CONTACTS)
     contactCount++;
