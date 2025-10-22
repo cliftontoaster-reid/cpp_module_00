@@ -6,10 +6,13 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:16:06 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/10/22 13:22:19 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/22 15:24:42 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+
+#include <cctype>
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -196,8 +199,22 @@ int main(void) {
   while (true) {
     std::cout << BOLD << "Enter command (ADD, SEARCH, EXIT): " << RESET;
     safeReadLine(std::cin, command);
+    while (command.empty()) {
+      // If stdout is a terminal, remove the blank line produced by the
+      // user pressing Enter with no input. We move the cursor up one line
+      // and clear the entire line. If not a TTY (redirected/piped), don't
+      // emit escape sequences.
+      if (isatty(STDOUT_FILENO)) {
+        // Move cursor up 1 line and clear the line
+        std::cout << "\033[1A\033[2K" << std::flush;
+      }
 
-    // We sanetize the command to uppercase and remove leading/trailing spaces
+      // Re-prompt until we get a non-empty command
+      std::cout << BOLD << "Enter command (ADD, SEARCH, EXIT): " << RESET;
+      safeReadLine(std::cin, command);
+    }
+
+    // We sanitize the command to uppercase and remove leading/trailing spaces
     // as well as anything after the first space
     for (std::string::const_iterator it = command.begin(); it != command.end();
          ++it) {
