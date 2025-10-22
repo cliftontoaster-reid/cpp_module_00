@@ -6,7 +6,7 @@
 /*   By: lfiorell@student.42nice.fr <lfiorell>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:42:10 by lfiorell@st       #+#    #+#             */
-/*   Updated: 2025/08/06 15:02:30 by lfiorell@st      ###   ########.fr       */
+/*   Updated: 2025/10/22 12:52:57 by lfiorell@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@
 #define BOLD "\033[1m"
 #define UNDERLINE "\033[4m"
 
-class Contact
-{
-public:
+class Contact {
+ public:
   Contact();
   ~Contact();
 
@@ -44,12 +43,14 @@ public:
   std::string getPhoneNumber() const;
   std::string getDarkestSecret() const;
 
-  void displayContact() const;
+  void displayContact(int index) const;
   void displayFullContact() const;
   void removeContact();
   bool isEmpty() const;
 
-private:
+  static bool isValidPhoneNumber(const std::string &phoneNumber);
+
+ private:
   std::string name;
   std::string firstName;
   std::string nickname;
